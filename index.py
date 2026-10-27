@@ -1,5 +1,45 @@
 # Colleciton type hints
 from typing import TypeVar
+from dataclasses import dataclass
+from abc import ABC, abstractmethod
+
+# Abstraction
+
+
+class Shape(ABC):
+    @abstractmethod
+    def area(self):
+        pass
+
+
+class Circle(Shape):
+    def area(self, radius):
+        return 3.14 * radius
+
+
+class Rectangle(Shape):
+    def area(self, length, width):
+        return length * width
+
+
+circle = Circle()
+rectangle = Rectangle()
+
+print(circle.area(10))
+print(rectangle.area(10, 20))
+
+
+# Dataclass
+
+@dataclass
+class Person:
+    name: str
+    age: int
+
+
+person = Person("John", 20)
+print(person)
+
 
 # list
 nums: list[int] = [1, 2, 3]
@@ -82,3 +122,27 @@ def get_value(value: T) -> T:
 print(get_value("hello"))
 print(get_value(1))
 print(get_value(True))
+
+
+class Student:
+    university = "ABC"
+
+    @classmethod
+    def get_university(cls) -> str:
+        return cls.university
+
+    @classmethod
+    def set_university(cls, university: str) -> None:
+        cls.university = university
+
+    @staticmethod
+    def is_adult(age: int):
+        return age >= 18
+
+
+print(Student.get_university())
+
+Student.set_university("XYZ")
+print(Student.get_university())
+
+print(Student.is_adult(20))
