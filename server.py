@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Query
 from pydantic import BaseModel
-from typing import Optional, Any, Literal, Annotated
+from typing import Optional, Any, Literal, Annotated, Generic, TypeVar
 from enum import Enum
 
 app = FastAPI()
@@ -26,6 +26,15 @@ students = [
     }
 ]
 
+T = TypeVar('T')
+
+
+class APIResponse(BaseModel, Generic[T]):
+    success: bool
+    message: str
+    data: T
+    limit: Optional[int] = None
+
 
 class UserRole(str, Enum):
     ADMIN = "admin"
@@ -49,7 +58,7 @@ async def root():
 
 
 @app.get('/students')
-async def find_students(name: Optional[str] | None = None, age: Optional[int] | None = None, limit: Annotated[int, Query(ge=1, le=100)] = 10):
+async def find_students(name: Optional[str] | None = None, age: Optional[int] | None = None, limit: Annotated[int, Query(ge=1, le=100)] = 10) -> APIResponse:
     find_students = students
 
     if name:
@@ -62,17 +71,18 @@ async def find_students(name: Optional[str] | None = None, age: Optional[int] | 
 
     return {
         "success": True,
+        "message": "Students found successfully",
         "data": find_students,
         "limit": limit
     }
 
 
 @app.post('/students')
-async def create_student(student: Student):
+async def create_student(student: Student) -> APIResponse:
     students.append(student)
 
     return {
         "success": True,
         "message": "Student created successfully",
-        "student": student,
+        "data": student,
     }

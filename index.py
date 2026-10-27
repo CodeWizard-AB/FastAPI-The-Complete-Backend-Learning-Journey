@@ -1,4 +1,5 @@
 # Colleciton type hints
+from typing import TypeVar
 
 # list
 nums: list[int] = [1, 2, 3]
@@ -53,3 +54,31 @@ print(list_add(["a", "b"], ["c", "d"]))
 # None and optional types
 student_name = "John"
 student_phone: str | None = None
+
+# type alias
+type StudentData = dict[str, list[str | int]]
+
+student_data: StudentData = {
+    "name": ["John", "Jane"],
+    "age": [20, 21]
+}
+
+
+def get_student() -> StudentData:
+    return {
+        "subjects": ["Math", "Science"],
+        "grades": [90, 80]
+    }
+
+
+# Generics
+T = TypeVar("T")
+
+
+def get_value(value: T) -> T:
+    return value
+
+
+print(get_value("hello"))
+print(get_value(1))
+print(get_value(True))
