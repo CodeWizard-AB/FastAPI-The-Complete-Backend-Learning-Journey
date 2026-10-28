@@ -2,6 +2,7 @@ from fastapi import FastAPI, Query
 from pydantic import BaseModel
 from typing import Optional, Any, Literal, Annotated, Generic, TypeVar
 from enum import Enum
+from users.services import login as loginUser
 
 app = FastAPI()
 
@@ -86,3 +87,8 @@ async def create_student(student: Student) -> APIResponse:
         "message": "Student created successfully",
         "data": student,
     }
+
+
+@app.post('/login')
+async def login():
+    return loginUser()
