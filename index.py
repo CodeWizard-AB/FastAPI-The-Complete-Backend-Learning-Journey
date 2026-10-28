@@ -146,3 +146,67 @@ Student.set_university("XYZ")
 print(Student.get_university())
 
 print(Student.is_adult(20))
+
+# Exception handling
+
+
+def withdraw(balance: float, amount: float) -> float:
+    if amount <= 0:
+        raise ValueError({
+            "success": False,
+            "message": "Amount must be greater than 0"
+        })
+
+    if amount > balance:
+        raise ValueError({
+            "success": False,
+            "message": "Insufficient balance"
+        })
+
+    return balance - amount
+
+
+try:
+    balance = withdraw(1000, 1200)
+except ValueError as e:
+    print(e.args[0].get("message"))
+else:
+    print(balance)
+finally:
+    print("Transaction completed")
+
+# Custom exceptions
+
+
+class PostNotFoundError(Exception):
+    pass
+
+
+posts = [
+    {
+        "id": 1,
+        "title": "Hello World",
+        "content": "This is my first post"
+    },
+    {
+        "id": 2,
+        "title": "Hello Python",
+        "content": "This is my second post"
+    }
+]
+
+
+def get_post(id: int) -> dict:
+    for post in posts:
+        if post["id"] == id:
+            return post
+
+    raise PostNotFoundError("Post not found")
+
+
+try:
+    print(get_post(1))
+    print(get_post(2))
+    print(get_post(3))
+except PostNotFoundError as error:
+    print(error)
