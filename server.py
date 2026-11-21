@@ -4,7 +4,15 @@ from typing import Optional, Any, Literal, Annotated, Generic, TypeVar
 from enum import Enum
 from users.services import login as loginUser
 
-app = FastAPI()
+app = FastAPI(title="CodeForge Learning API",
+              description="API for CodeForge Learning", version="1.0.0", docs_url="/api-docs", redoc_url="/reference", openapi_url="/schema.json", debug=True)
+
+
+class User(BaseModel):
+    name: str
+    email: str
+    password: str
+
 
 students = [
     {
