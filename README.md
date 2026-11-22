@@ -1,4 +1,4 @@
-# FastAPI Setup and First Principles
+# Module 01 — FastAPI Setup and First Principles
 
 **Goal:** Understand what FastAPI is, how a request reaches your Python function, and how to run an API locally.
 
