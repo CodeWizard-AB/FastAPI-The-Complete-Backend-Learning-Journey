@@ -1,7 +1,14 @@
 from fastapi import FastAPI
 
-app = FastAPI(title="CodeForge Learning API",
-              description="API for CodeForge Learning", version="1.0.0", docs_url="/api-docs", redoc_url="/reference", openapi_url="/schema.json", debug=True)
+app = FastAPI(
+    title="Product Management API",
+    description="API for managing products",
+    version="1.0.0",
+    docs_url="/api-docs",
+    redoc_url="/reference",
+    openapi_url="/schema.json",
+    debug=True
+)
 
 
 @app.get("/")
